@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
+		<link href="http://fonts.googleapis.com/css?family=Roboto:300,400,700|" rel="stylesheet" type="text/css">
+		<link href="{{url_for('static',filename='fonts/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+
+		<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='main.css')}}">
+
+	</head>
+
+
+	<body>
+		<div id="site-content">
+			<header class="site-header">
+				<div class="container">
+					<a href="/home/1" id="branding">
+						<img src="{{url_for('static',filename='images/logo1.png')}}" alt="" class="logo">
+						<div class="logo-copy">
+							<h1 class="site-title">Book Recommender</h1>
+							<small class="site-description">Books you Like.....</small>
+						</div>
+					</a> 
+					<form action="/search/1/a/{{userid}}" method="POST">
+					<div class="main-navigation">
+						<ul class="menu">
+							<button class="dropbtn"><i class="fa fa-search"></i></button>
+						</ul> 
+					</div> 
+					<div class="dropdown">
+							<input type="text" placeholder="Search.." id="myInput" name="search" />
+					  </div>
+					</form>
+					<div class="mobile-navigation"></div>
+				</div>
+				<div style="margin-left: 178px;margin-top: 20px;margin-bottom: -60px;color:rgb(240, 228, 228);font-family: sans-serif;">
+					<h2>Hello! User - {{userid}}</h2>
+				</div>
+			</header>
+			<main class="main-content">
+				
+				<div class="container">
+					<div class="page">
+						<div class="breadcrumbs">
+							<a href="/home/1">Home</a>
+							<span>Books</span>
+						</div>
+
+						
+						<div class="movie-list">
+                            {%for i in range(0, lenn)%}
+							<div class="movie">
+								<figure class="movie-poster">
+									{% if images[i]=="" -%}
+									<img src="{{url_for('static',filename='images/not.jpg')}}" alt="#">
+									{% else -%}
+									<img src="{{url_for('static',filename='/home/')}}{{i}}.jpg" alt="#">
+									{% endif %}
+								</figure>
+								<div class="movie-title"><a href="/single/{{isbns[i]}}/{{userid}}">{{titles[i]}}</a></div>
+							</div>
+                            {%endfor%}
+						</div> 
+						<div class="pagination">
+							{% if pageno|int !=1 -%}
+							<a href="/home/{{pageno|int - 1}}" class="page-number prev"><i class="fa fa-angle-left"></i></a>
+							{% else -%}
+
+							{% endif %}
+							<span class="page-number current">{{pageno}}</span>
+							<a href="/home/{{pageno|int + 1}}" class="page-number">{{pageno|int + 1}}</a>
+							<a href="/home/{{pageno|int + 2}}" class="page-number">{{pageno|int + 2}}</a>
+							<a href="/home/{{pageno|int + 3}}" class="page-number">{{pageno|int + 3}}</a>
+							<a href="/home/{{pageno|int + 4}}" class="page-number">{{pageno|int + 4}}</a>
+							<a href="/home/{{pageno|int + 1}}" class="page-number next"><i class="fa fa-angle-right"></i></a>
+						</div>
+					</div>
+				</div>
+			</main>
+		    		</div>
+		<script src="js/jquery-1.11.1.min.js"></script>
+		<script src="js/plugins.js"></script>
+		<script src="js/app.js"></script>
+	</body>
+
+</html>

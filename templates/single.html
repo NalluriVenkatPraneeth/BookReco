@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
+		<!-- Loading third party fonts -->
+		<link href="http://fonts.googleapis.com/css?family=Roboto:300,400,700|" rel="stylesheet" type="text/css">
+		<link href="{{url_for('static',filename='fonts/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+
+		<!-- Loading main css file -->
+		<link rel="stylesheet" href="{{url_for('static',filename='main2.css')}}">
+		
+		<!--[if lt IE 9]>
+		<script src="js/ie-support/html5.js"></script>
+		<script src="js/ie-support/respond.js"></script>
+		<![endif]-->
+		
+	</head>
+
+
+	<body>
+		<div id="site-content">
+			<header class="site-header">
+				<div class="container">
+					<a href="/home/1" id="branding">
+						<img src="{{url_for('static',filename='images/logo1.png')}}" alt="" class="logo">
+						<div class="logo-copy">
+							<h1 class="site-title">Book Recommender</h1>
+							<small class="site-description">Books you Like.....</small>
+						</div>
+					</a> 
+					<form action="/search/1/a/{{userid}}" method="POST">
+						<div class="main-navigation">
+							<ul class="menu">
+								<button class="dropbtn"><i class="fa fa-search"></i></button>
+							</ul> 
+						</div> 
+						<div class="dropdown">
+								<input type="text" placeholder="Search.." id="myInput" name="search" />
+						  </div>
+						</form>
+
+
+					<div class="mobile-navigation"></div>
+				</div>
+			</header>
+			<main class="main-content">
+				<div class="container">
+					<div class="page">
+						<div class="breadcrumbs">
+							<a href="/home/1">Home</a>
+							<a >Books</a>
+							<span>{{title}}</span>
+						</div>
+
+						<div class="content">
+							<div class="row">
+								<div class="col-md-6">
+									<figure class="movie-poster"><img src="{{imag}}" alt="#"></figure>
+								</div>
+								<div class="col-md-6">
+									<h2 class="movie-title">{{title}}</h2>
+									<ul class="movie-meta">
+										<li><strong>Rating:</strong> 
+											{%for i in range(1, 6)%}
+											{% if  i < rate -%}
+											<span class="fa fa-star checked"></span>
+											{% else -%}
+											<span class="fa fa-star"></span>
+											{% endif %}
+											{%endfor%}
+										</li>
+										<li><strong>Author:</strong> {{ba}}</li>
+										<li><strong>ISBN:</strong> {{isbn}}</li>
+										<li><strong>Year Of Publication:</strong> {{yop}} </li>
+										<li><strong>Publisher:</strong> {{pub}}</li>
+										
+									</ul>
+								</div>
+							</div> <!-- .row -->
+						</div>
+						
+					</div>
+				</div> 
+				<div class="container">
+					<div class="page">
+
+						<div style="border-bottom: 2px rgb(255, 102, 0);border-style: hidden hidden solid hidden;margin-bottom: 50px;color:#20201f;font-family:sans-serif;font-size: 16px;">
+                            <p>Since you liked, <b>{{title}}</b>.... you might also like..</p>
+						</div>
+						<div id='kk'>
+                            {%for i in range(0, lenn1)%}
+							<div class="movie">
+								<figure class="movie-poster">
+									{% if images1[i]=="" -%}
+									<img src="{{url_for('static',filename='images/not.jpg')}}" alt="#">
+									{% else -%}
+									<img src="{{url_for('static',filename='single/content/')}}{{i}}.jpg" alt="#">
+									{% endif %}
+								</figure>
+								<div class="movie-title"><a href="/single/{{isbns1[i]}}/{{userid}}">{{titles1[i]}}</a></div>
+								<!-- <p>Sed ut perspiciatis unde omnis iste natus error voluptatem doloremque.</p>-->
+							</div>
+                            {%endfor%}
+						</div>
+                        
+                    </div>
+				</div>
+				<div class="container">
+					<div class="page">
+
+						<div style="border-bottom: 2px rgb(255, 102, 0);border-style: hidden hidden solid hidden;margin-bottom: 50px;color:#20201f;font-family:sans-serif;font-size: 16px;">
+							<h2>People like you have read.....</h2>
+						</div>
+						<div id='kk'>
+							{%for i in range(0, lenn2)%}
+							<div class="movie">
+								<figure class="movie-poster">
+									{% if images2[i]=="" -%}
+									<img src="{{url_for('static',filename='images/not.jpg')}}" alt="#">
+									{% else -%}
+									<img src="{{url_for('static',filename='/single/collab/')}}{{i}}.jpg" alt="#">
+									{% endif %}
+								</figure>
+								<div class="movie-title"><a href="/single/{{isbns2[i]}}/{{userid}}">{{titles2[i]}}</a></div>
+								<!-- <p>Sed ut perspiciatis unde omnis iste natus error voluptatem doloremque.</p>-->
+							</div>
+							{%endfor%}
+						</div>
+						
+					</div>
+			</main>
+		</div>
+		<script src="js/jquery-1.11.1.min.js"></script>
+		<script src="js/plugins.js"></script>
+		<script src="js/app.js"></script>
+		
+	</body>
+
+</html>

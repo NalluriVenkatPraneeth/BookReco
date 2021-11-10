@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
+		<link href="http://fonts.googleapis.com/css?family=Roboto:300,400,700|" rel="stylesheet" type="text/css">
+		<link href="{{url_for('static',filename='fonts/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+
+		<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='main.css')}}">
+
+		<script>
+		function myFunction() {
+			document.getElementById("myDropdown").classList.toggle("show");
+		  }		  
+		  function filterFunction() {
+			var input, filter, ul, li, a, i;
+			var j=0;
+			input = document.getElementById("myInput");
+			filter = input.value.toUpperCase();
+			div = document.getElementById("myDropdown");
+			if (filter.length>=3){
+			a = div.getElementsByTagName("a");
+			for (i = 0; i < a.length; i++) {
+			  txtValue = a[i].textContent || a[i].innerText;
+			  if (txtValue.toUpperCase().startsWith(filter)) {
+				a[i].style.display = "";
+			  } else {
+				a[i].style.display = "none";
+			  }
+			}
+		  }
+		}
+				// Get the modal
+		var modal = document.getElementById('id01');
+
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+			if (event.target == modal) {
+				modal.style.display = "none";
+			}
+		}
+		</script>
+	</head>
+
+
+	<body>
+		<div id="id01" class="modal">
+  
+			<form class="modal-content animate" action="" method="post">
+			  <div class="imgcontainer">
+				<span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+			  </div>
+		  
+			  <div class="container">
+				<label for="uname"><b>Username</b></label>
+				<input type="text" placeholder="Enter Username" name="uname" required>
+		  
+				<label for="psw"><b>Password</b></label>
+				<input type="password" placeholder="Enter Password" name="psw" required>
+				  
+				<button type="submit">Login</button>
+				<label>
+				  <input type="checkbox" checked="checked" name="remember"> Remember me
+				</label>
+			  </div>
+		  
+			  <div class="container" style="background-color:#f1f1f1">
+				<button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+				<span class="psw">Forgot <a href="#">password?</a></span>
+			  </div>
+			</form>
+		  </div>
+
+		<div id="site-content">
+			<header class="site-header">
+				<div class="container">
+					<a href="" id="branding">
+						<img src="{{url_for('static',filename='images/logo1.png')}}" alt="" class="logo">
+						<div class="logo-copy">
+							<h1 class="site-title">Book Recommender</h1>
+							<small class="site-description">Books you Like.....</small>
+						</div>
+					</a> <!-- #branding -->
+
+					<div class="main-navigation">
+						<!-- <button type="button" class="menu-toggle"><i class="fa fa-bars"></i></button>
+						<div><form action="#" class="search">
+							<button><i class="fa fa-search"></i></button>
+							<input type="text" placeholder="Search...">
+						</form>
+						</div> -->
+						<div class="dropdown">
+							<button onclick="myFunction()" class="dropbtn"><i class="fa fa-search"></i></button>
+							<div id="myDropdown" class="dropdown-content">
+							  <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+							<!-- <div id="nor">
+							  {%for i in alltitles%}
+							  <a  href="">{{i}}</a>
+                            {%endfor%}
+							</div> -->
+							</div>
+						  </div>
+						<ul class="menu">
+							<li class="menu-item"><button class="btnn"><a onclick="document.getElementById('id01').style.display='block'">Login</a></button></li>
+							<li class="menu-item"><a href="about.html">Sign Up</a></li>
+						</ul> <!-- .menu -->
+					</div> <!-- .main-navigation -->
+
+					<div class="mobile-navigation"></div>
+				</div>
+			</header>
+			<main class="main-content">
+				<div class="container">
+					<div class="page">
+						<div class="breadcrumbs">
+							<a href="login.html">Home</a>
+							<span>Books</span>
+						</div>
+
+						<div class="filters">
+							<select name="#" id="#" placeholder="Choose Category">
+								<option value="#">Action</option>
+								<option value="#">Drama</option>
+								<option value="#">Fantasy</option>
+								<option value="#">Horror</option>
+								<option value="#">Adventure</option>
+							</select>
+							<select name="#" id="#">
+								<option value="#">2012</option>
+								<option value="#">2013</option>
+								<option value="#">2014</option>
+							</select>
+						</div>
+						<div class="movie-list">
+                            {%for i in range(0, lenn)%}
+							<div class="movie">
+								<figure class="movie-poster">
+									{% if images[i]=="" -%}
+									<img src="{{url_for('static',filename='images/not.jpg')}}" alt="#">
+									{% else -%}
+									<img src="{{url_for('static',filename='')}}{{i}}.jpg" alt="#">
+									{% endif %}
+								</figure>
+								<div class="movie-title"><a href="/single">{{titles[i]}}</a></div>
+								<!-- <p>Sed ut perspiciatis unde omnis iste natus error voluptatem doloremque.</p>-->
+							</div>
+                            {%endfor%}
+						</div> <!-- .movie-list -->
+
+						<div class="pagination">
+							{% if pageno|int !=1 -%}
+							<a href="/home/{{pageno|int - 1}}" class="page-number prev"><i class="fa fa-angle-left"></i></a>
+							{% else -%}
+
+							{% endif %}
+							<span class="page-number current">{{pageno}}</span>
+							<a href="/home/{{pageno|int + 1}}" class="page-number">{{pageno|int + 1}}</a>
+							<a href="/home/{{pageno|int + 2}}" class="page-number">{{pageno|int + 2}}</a>
+							<a href="/home/{{pageno|int + 3}}" class="page-number">{{pageno|int + 3}}</a>
+							<a href="/home/{{pageno|int + 4}}" class="page-number">{{pageno|int + 4}}</a>
+							<a href="#" class="page-number next"><i class="fa fa-angle-right"></i></a>
+						</div>
+					</div>
+				</div> <!-- .container -->
+			</main>
+		    <!-- <footer class="site-footer">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-2">
+							<div class="widget">
+								<h3 class="widget-title">About Us</h3>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia tempore vitae mollitia nesciunt saepe cupiditate</p>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="widget">
+								<h3 class="widget-title">Recent Review</h3>
+								<ul class="no-bullet">
+									<li>Lorem ipsum dolor</li>
+									<li>Sit amet consecture</li>
+									<li>Dolorem respequem</li>
+									<li>Invenore veritae</li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="widget">
+								<h3 class="widget-title">Help Center</h3>
+								<ul class="no-bullet">
+									<li>Lorem ipsum dolor</li>
+									<li>Sit amet consecture</li>
+									<li>Dolorem respequem</li>
+									<li>Invenore veritae</li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="widget">
+								<h3 class="widget-title">Join Us</h3>
+								<ul class="no-bullet">
+									<li>Lorem ipsum dolor</li>
+									<li>Sit amet consecture</li>
+									<li>Dolorem respequem</li>
+									<li>Invenore veritae</li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="widget">
+								<h3 class="widget-title">Social Media</h3>
+								<ul class="no-bullet">
+									<li>Facebook</li>
+									<li>Twitter</li>
+									<li>Google+</li>
+									<li>Pinterest</li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="widget">
+								<h3 class="widget-title">Newsletter</h3>
+								<form action="#" class="subscribe-form">
+									<input type="text" placeholder="Email Address">
+								</form>
+							</div>
+						</div> 
+					</div> 
+
+					<div class="colophon">Copyright 2014 Company name, Designed by Themezy. All rights reserved</div>
+				</div>
+
+			</footer> -->
+		</div>
+		<!-- Default snippet for navigation -->
+		
+
+
+		<script src="js/jquery-1.11.1.min.js"></script>
+		<script src="js/plugins.js"></script>
+		<script src="js/app.js"></script>
+	</body>
+
+</html>
